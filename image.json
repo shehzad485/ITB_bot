@@ -1,0 +1,93 @@
+[
+    { 
+      "imageName": "safety_checklist.jpg",
+      "imagePath": "./images/image0.png",
+      "questions": ["콘크리트 펌프카 안전점검표 보여줘"],
+      "imageCaption": "concrete pump car safety checklist",
+      "KoreanimageCaption":"콘크리트 펌프 트럭 안전 체크리스트",
+      "imageTags": ["Concrete Pump Truck", "Hydraulic Pump", "Construction Equipment", "Concrete Delivery"]
+    },  
+    {
+      "imageName": "concrete_pump_truck_features.jpg",
+      "imagePath": "./images/image1.jpg",
+      "questions": ["펌프카 아웃트리거과 뭐야、 그리고  아웃트리거 관련 안전 주의 사항을 알려줘"],
+      "imageCaption": "Illustration of a concrete pump truck, highlighting its key components including the mobile truck base, extendable boom, delivery pipes, hopper, and stabilizing outriggers. The image also emphasizes the hydraulic pump system, showcasing modern concrete pumping technology's efficiency and flexibility.",
+      "KoreanimageCaption":"이동식 트럭 베이스, 확장 가능한 붐, 전달 파이프, 호퍼 및 안정화 아우트리거를 포함한 주요 구성 요소를 강조하는 콘크리트 펌프 트럭의 그림입니다. 또한 이미지는 유압 펌프 시스템을 강조하여 현대 콘크리트 펌핑 기술의 효율성과 유연성을 보여줍니다.",
+      "imageTags": ["Concrete Pump Truck", "Hydraulic Pump", "Construction Equipment", "Concrete Delivery"]
+    },
+    {
+        "imageName": "risk_hose_whip.jpg",
+        "imagePath": "./images/image2.jpg",
+        "questions": [],
+        "imageCaption": "Illustration of hose whip accident involving a concrete pump truck, highlighting the danger posed to nearby workers.",
+        "KoreanimageCaption":"콘크리트 펌프 트럭과 관련된 호스 채찍 사고에 대한 그림으로 인근 작업자에게 가해지는 위험을 강조합니다.",
+        "imageTags": ["Hose Whip", "Concrete Pump Truck", "Construction Safety"]
+      },
+      {
+        "imageName": "risk_vehicle_collision.jpg",
+        "imagePath": "./images/image3.jpg",
+        "questions": [],
+        "imageCaption": "Diagram showing a potential collision scenario with reversing concrete transport vehicles at a construction site.",
+        "KoreanimageCaption":"건설 현장에서 후진 콘크리트 운송 차량과의 잠재적인 충돌 시나리오를 보여주는 다이어그램.",
+        "imageTags": ["Vehicle Collision", "Safety Measures", "Construction Site"]
+      },
+      {
+        "imageName": "electrocution_risk.jpg",
+        "imagePath": "./images/image4.jpg",
+        "questions": [],
+        "imageCaption": "Warning illustration of a concrete pump truck's boom nearing overhead power lines, highlighting the risk of electrocution. Safety measures include maintaining a safe distance from power lines and using insulating materials.",
+        "KoreanimageCaption":"머리 위 전력선 근처에 있는 콘크리트 펌프 트럭의 붐에 대한 경고 그림으로 감전 위험을 강조합니다. 안전 조치에는 전력선으로부터 안전한 거리를 유지하고 절연재를 사용하는 것이 포함됩니다.",
+        "imageTags": ["Electrocution", "Concrete Pump Truck", "Safety Measures", "Overhead Power Lines"]
+      },
+      {
+        "imageName": "boom_descent_accident.jpg",
+        "imagePath": "./images/image5.jpg",
+        "questions": ["펌프카 붐대 사고유형과 각각의 원인과 대책","콘크리트 타설하는데 붐대 밑에 작업자가 있어","붐대 밑에 작업자를 왜 이동시켜야해?","붐대가 부러지는 사고를 예방하려면 어떤 조치를 취해야되?"],
+        "imageCaption": "An illustration depicting an accident caused by the sudden descent of a concrete pump truck boom, striking a worker during a concrete pouring operation. This highlights the importance of ensuring stable ground support for the outriggers to prevent tilting and subsequent accidents.",
+        "KoreanimageCaption":"콘크리트 펌프카 붐이 갑자기 하강하여 콘크리트 타설 작업 중 작업자가 부딪치는 사고를 묘사한 그림입니다. 이는 기울어짐 및 후속 사고를 방지하기 위해 아우트리거에 대한 안정적인 지상 지지를 보장하는 것이 중요함을 강조합니다.",
+        "imageTags": ["Concrete Pump Truck", "Accident", "Boom Descent", "Worker Safety", "Outrigger Stability"]
+      },
+      {
+        "imageName": "worker_caught_during_operation.jpg",
+        "imagePath": "./images/image6.jpg",
+        "questions": ["펌프카 붐대 사고유형과 각각의 원인과 대책"],
+        "imageCaption": "Depiction of a safety hazard an accident where a worker gets caught between the concrete pump truck's outrigger and the truck body during the retraction process. This emphasizes the critical need for entry restriction measures and worker awareness around moving machinery parts.",
+        "KoreanimageCaption":"콘크리트 펌프트럭의 아웃리거와 트럭 본체 사이에 작업자가 끼이는 사고로 인한 안전사고를 묘사한 작품입니다. 이는 움직이는 기계 부품에 대한 출입 제한 조치와 근로자 인식의 중요성을 강조합니다.",
+        "imageTags": ["Concrete Pump Truck", "Worker Safety", "Accident Prevention", "Outrigger Hazard"]
+      },
+      {
+        "imageName": "concrete_pump_truck_setup.jpg",
+        "imagePath": "./images/image7.jpg",
+        "questions": ["펌프카 아웃트리거과 뭐야、 그리고  아웃트리거 관련 안전 주의 사항을 알려줘","펌프카로 콘크리트 타설할 때 안전수칙 알려줘"],
+        "imageCaption": "An image showing the setup process of a concrete pump truck, focusing on the outrigger extension, the secure connection of hoses and pipes, and the operator ensuring all safety checks are in place. The background includes a construction site where the concrete is being poured, highlighting the importance of adhering to safety protocols to prevent accidents.",
+        "KoreanimageCaption":"아우트리거 연장, 호스와 파이프의 안전한 연결, 모든 안전 점검이 제대로 이루어졌는지 확인하는 운전자에 초점을 맞춘 콘크리트 펌프 트럭의 설정 과정을 보여주는 이미지입니다. 배경에는 콘크리트가 타설되고 있는 건설 현장이 포함되어 있어 사고 예방을 위한 안전 수칙 준수의 중요성을 강조합니다.",
+        "imageTags": ["Concrete Pump Truck", "Safety Checks", "Outrigger Extension", "Construction Safety"]
+      },
+      {
+        "imageName": "concrete_introduction_transportation.jpg",
+        "imagePath": "./images/image8.jpg",
+        "questions": ["펌프카로 콘크리트 타설할 때 안전수칙 알려줘","펌프카 호스가 뭐야"],
+        "imageCaption": "A comprehensive view of concrete being introduced and transported at a construction site, showcasing a remicon truck preparing to unload concrete into a pump truck. The image highlights safety measures, including PPE usage, secure chute operation, and collision avoidance strategies between vehicles, ensuring safe and efficient concrete handling.",
+        "KoreanimageCaption":"건설 현장에서 콘크리트가 투입되고 운반되는 모습을 종합적으로 보여주며, 콘크리트를 펌프 트럭에 하역하기 위한 준비를 하고 있는 레미콘 트럭을 보여줍니다. 이미지는 PPE 사용, 안전한 슈트 작동, 차량 간 충돌 방지 전략을 포함한 안전 조치를 강조하여 안전하고 효율적인 콘크리트 취급을 보장합니다.",
+        "imageTags": ["Concrete Introduction", "Transportation", "Construction Site", "Safety Measures", "Remicon Truck", "Pump Truck"]
+      },
+      {
+        "imageName": "concrete_pouring_compaction.jpg",
+        "imagePath": "./images/image9.jpg",
+        "questions": ["펌프카로 콘크리트 타설할 때 안전수칙 알려줘","펌프카 호스가 뭐야"],
+        "imageCaption": "A construction site scene depicting the process of concrete pouring and compaction. Workers are shown wearing the required PPE, such as safety helmets, gloves, and boots, while operating a concrete hose securely connected to a pump truck. The image highlights the critical safety measures in place, including electrocution prevention with vibrators and ensuring stable work platforms over rebar.",
+        "KoreanimageCaption":"콘크리트 타설 및 압축 과정을 묘사한 건설 현장 장면입니다. 작업자들은 안전 헬멧, 장갑, 부츠 등 필수 PPE를 착용하고 펌프 트럭에 단단히 연결된 콘크리트 호스를 작동하는 모습을 보여줍니다. 이미지는 진동기를 이용한 감전 예방, 철근 위의 안정적인 작업 플랫폼 보장 등 현재 시행 중인 중요한 안전 조치를 강조합니다.",
+        "imageTags": ["Concrete Pouring", "Compaction", "Construction Safety", "PPE", "Concrete Pump Truck"]
+      },
+      {
+        "imageName": "concrete_curing_safety.jpg",
+        "imagePath": "./images/image10.jpg",
+        "questions": ["펌프카로 콘크리트 타설할 때 안전수칙 알려줘"],
+        "imageCaption": "An image showcasing a concrete curing site equipped with essential safety measures including electrocution prevention measures for heaters, proper ventilation for lignite use, protective barriers around site openings, respiratory protection gear for workers, fire extinguishers for emergency response, and adequate lighting for night operations. These measures ensure the safety and health of workers while maintaining the quality of the curing process.",
+        "KoreanimageCaption":"히터의 감전 예방 조치, 갈탄 사용을 위한 적절한 환기, 현장 개구부 주변의 보호 장벽, 작업자를 위한 호흡 보호 장비, 비상 대응을 위한 소화기, 야간 작업을 위한 적절한 조명 등 필수 안전 조치를 갖춘 콘크리트 양생 현장을 보여주는 이미지입니다. 이러한 조치는 경화 공정의 품질을 유지하면서 작업자의 안전과 건강을 보장합니다.",
+        "imageTags": ["Concrete Curing", "Safety Measures", "Electrocution Prevention", "Ventilation", "Respiratory Protection", "Fire Prevention", "Night Work"]
+      }
+
+
+  ]
+  
