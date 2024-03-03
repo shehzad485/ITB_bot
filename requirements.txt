@@ -1,7 +1,4 @@
 langchain==0.0.144
-docx2txt==0.8
-Pillow==8.4.0
-regex
 PyPDF2==3.0.1
 streamlit==1.21.0
 openai==0.27.0
