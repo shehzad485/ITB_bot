@@ -21,7 +21,7 @@ from io import StringIO
 
 from PIL import Image
 
-os.environ["OPENAI_API_KEY"]="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"
+#os.environ["OPENAI_API_KEY"]="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"
 
 img = Image.open("img/dl_small.png")
 st.set_page_config(page_title="DL",page_icon=img)
