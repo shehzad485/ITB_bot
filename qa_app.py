@@ -21,7 +21,7 @@ from io import StringIO
 
 from PIL import Image
 
-os.environ["OPENAI_API_KEY"]="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"
+os.environ["OPENAI_API_KEY"]="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"
 
 img = Image.open("img/dl_small.png")
 st.set_page_config(page_title="DL",page_icon=img)
@@ -106,6 +106,28 @@ def split_texts(text, chunk_size, overlap, split_method):
 
     return splits
 
+# @st.cache_data
+# def generate_eval(text, N, chunk):
+
+#     # Generate N questions from context of chunk chars
+#     # IN: text, N questions, chunk size to draw question from in the doc
+#     # OUT: eval set as JSON list
+
+#     st.info("`Generating sample questions ...`")
+#     n = len(text)
+#     starting_indices = [random.randint(0, n-chunk) for _ in range(N)]
+#     sub_sequences = [text[i:i+chunk] for i in starting_indices]
+#     chain = QAGenerationChain.from_llm(ChatOpenAI(temperature=0))
+#     eval_set = []
+#     for i, b in enumerate(sub_sequences):
+#         try:
+#             qa = chain.run(b)
+#             eval_set.append(qa)
+#             st.write("Creating Question:",i+1)
+#         except:
+#             st.warning('Error generating question %s.' % str(i+1), icon="⚠️")
+#     eval_set_full = list(itertools.chain.from_iterable(eval_set))
+#     return eval_set_full
 @st.cache_data
 def generate_eval(text, N, chunk):
 
@@ -115,19 +137,31 @@ def generate_eval(text, N, chunk):
 
     st.info("`Generating sample questions ...`")
     n = len(text)
-    starting_indices = [random.randint(0, n-chunk) for _ in range(N)]
-    sub_sequences = [text[i:i+chunk] for i in starting_indices]
-    chain = QAGenerationChain.from_llm(ChatOpenAI(temperature=0))
     eval_set = []
-    for i, b in enumerate(sub_sequences):
+
+    if n < chunk:
+        st.warning("Text length is smaller than chunk size.")
+        return eval_set
+
+    for i in range(N):
+        # Adjust the range if necessary
+        if n - chunk <= 0:
+            starting_index = 0
+        else:
+            starting_index = random.randint(0, n - chunk)
+
+        b = text[starting_index: starting_index + chunk]
         try:
+            chain = QAGenerationChain.from_llm(ChatOpenAI(temperature=0))
             qa = chain.run(b)
             eval_set.append(qa)
-            st.write("Creating Question:",i+1)
-        except:
-            st.warning('Error generating question %s.' % str(i+1), icon="⚠️")
+            st.write("Creating Question:", i + 1)
+        except Exception as e:
+            st.warning(f'Error generating question {i+1}: {str(e)}', icon="⚠️")
+
     eval_set_full = list(itertools.chain.from_iterable(eval_set))
     return eval_set_full
+
 
 
 # ...
@@ -208,10 +242,10 @@ def main():
     
     
     st.sidebar.title("Menu")
-    #language = st.text_input(
-            #'언어 선택', value="", placeholder="한국어 \"k\", 영어 \"e\"")
-    # language = st.sidebar.radio(
-    #     "Choose Language/언어 선택", ["English/영어", "Korean/한국인"])
+    language = st.text_input(
+            '언어 선택', value="", placeholder="한국어 \"k\", 영어 \"e\"")
+    language = st.sidebar.radio(
+        "Choose Language/언어 선택", ["English/영어", "Korean/한국인"])
     
     embedding_option = "OpenAI Embeddings"
     
@@ -226,7 +260,7 @@ def main():
     splitter_type = "RecursiveCharacterTextSplitter"
 
     if 'openai_api_key' not in st.session_state:
-        openai_api_key = os.environ["OPENAI_API_KEY"]="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"
+        openai_api_key = os.environ["OPENAI_API_KEY"]
         #language = st.text_input(
             #'언어 선택', value="", placeholder="한국어 \"k\", 영어 \"e\"")
         #openai_api_key = st.text_input(
@@ -330,113 +364,114 @@ def main():
             openai.api_key = os.environ["OPENAI_API_KEY"]  # Replace with your actual key
 
             # Load the JSON file containing image captions
-            with open("image.json", "r") as f:
-                image_data = json.load(f)
+            # with open("image.json", "r") as f:
+            #     image_data = json.load(f)
                 #st.info("`loading image data...`")
 
             # Define the question
             question = user_question
             Exactly_matched = False
+            # prompt 
 ##############################################################################
             #FOR EXACT MATCH WITH QUESTION
-            for image_info in image_data:
-                caption = image_info["imageCaption"]
-                korean_caption = image_info["KoreanimageCaption"]
-                image_path = image_info["imagePath"]
+            # for image_info in image_data:
+            #     caption = image_info["imageCaption"]
+            #     korean_caption = image_info["KoreanimageCaption"]
+            #     image_path = image_info["imagePath"]
                 #question_list = image_info["questions"]
 
                 
-                for q in image_info["questions"]: 
-                    prompt = [
-                        {"role": "system", "content": "You are a helpful assistant"},
-                        {"role": "user", "content": f"If question1 matches exactly with question 2,then just reply with Yes otherwise No\n\nQuestion1 '{user_question}'?\n\nQuestion2 : {q}"},
-                        ]
-                
+            # for q in image_info["questions"]: 
+            prompt = [
+                {"role": "system", "content": "You are a helpful assistant"},
+                {"role": "user", "content": f"If question1 matches exactly with question 2,then just reply with Yes otherwise No\n\nQuestion1 '{user_question}'?\n\nQuestion2 : "},
+                ]
+            
 
-                
-                    #prompt = f"does the caption best matches the question, if yes then just say yes otherwise no,  question: '{question}'?\n\nCaption: {caption}"
+            
+                #prompt = f"does the caption best matches the question, if yes then just say yes otherwise no,  question: '{question}'?\n\nCaption: {caption}"
 
-                    # Send the prompt to OpenAI
-                    response = openai.ChatCompletion.create(
-                        model="gpt-3.5-turbo",
-                        messages=prompt,
-                        max_tokens=150,
-                        n=1,
-                        stop=None,
-                        temperature=0.5,
-                        )
-                    #st.info(f"`Response ..."+str(response.choices[0].message.content.split("\n")[-1]))
-                
-                    #st.info(f"`Response ..."+str(response.choices[0].message.content.split("\n")[-1]))
-                    # Check if OpenAI's response matches the caption
-                    if response.choices[0].message.content.split("\n")[-1] == "Yes":
-                        Exactly_matched = True
-                        # Match found, save image path and caption
-                        matched_image_path = image_path
-                        matched_caption = caption
-                        korean_matched_caption = korean_caption
-                        #st.info("found matching image...")
-                    
-                        #st.image(matched_image_path, caption=None, width=300, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
-                        if language == "English/영어":
-                            #st.image(matched_image_path, caption=None, width=300, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
-                            #st.write(matched_caption)
-                            # Create columns for layout
-                            col1, col2 = st.columns(2)
-
-                            # Display image in first column with appropriate width and caption text size
-                            with col1:
-                                st.image(
-                                    matched_image_path,
-                                    caption=None,
-                                    width=300,
-                                    use_column_width=None,  # Ensure image respects width in pixels
-                                    clamp=False,
-                                    channels="RGB",
-                                    output_format="auto",
-                                )
-
-                            # Display caption in second column with small text size and right alignment
-                            with col2:
-                                st.markdown(
-                                    f"<p style='font-size: small; text-align: left;'>{matched_caption}</p>",
-                                    unsafe_allow_html=True,
-                                )
-                            st.write(" ")
+                # Send the prompt to OpenAI
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=prompt,
+                max_tokens=500,
+                n=1,
+                stop=None,
+                temperature=0.5,
+                )
+            #st.info(f"`Response ..."+str(response.choices[0].message.content.split("\n")[-1]))
         
-                            #col1, mid, col2 = st.beta_columns([1,1,20])
-                            #with col1:
-                                #st.image(matched_image_path, width=300, channels="RGB", output_format = "auto")
-                            #with col2:
-                            
-                                #st.write(matched_caption)
+            #st.info(f"`Response ..."+str(response.choices[0].message.content.split("\n")[-1]))
+            # Check if OpenAI's response matches the caption
+            if response.choices[0].message.content.split("\n")[-1] == "Yes":
+                Exactly_matched = True
+                # Match found, save image path and caption
+                # matched_image_path = image_path
+                # matched_caption = caption
+                # korean_matched_caption = korean_caption
+                #st.info("found matching image...")
+            
+                #st.image(matched_image_path, caption=None, width=300, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
+                if language == "English/영어":
+                    #st.image(matched_image_path, caption=None, width=300, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
+                    #st.write(matched_caption)
+                    # Create columns for layout
+                    col1, col2 = st.columns(2)
 
-                        elif language == "Korean/한국인":
-                            #st.image(matched_image_path, caption=None, width=300, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
-                            col1, col2 = st.columns(2)
+                    # Display image in first column with appropriate width and caption text size
+                    # with col1:
+                    #     st.image(
+                    #         matched_image_path,
+                    #         caption=None,
+                    #         width=300,
+                    #         use_column_width=None,  # Ensure image respects width in pixels
+                    #         clamp=False,
+                    #         channels="RGB",
+                    #         output_format="auto",
+                    #     )
 
-                            # Display image in first column with appropriate width and caption text size
-                            with col1:
-                                st.image(
-                                    matched_image_path,
-                                    caption=None,
-                                    width=300,
-                                    use_column_width=None,  # Ensure image respects width in pixels
-                                    clamp=False,
-                                    channels="RGB",
-                                    output_format="auto",
-                                )
+                    # Display caption in second column with small text size and right alignment
+                    # with col2:
+                    #     st.markdown(
+                    #         f"<p style='font-size: small; text-align: left;'>{matched_caption}</p>",
+                    #         unsafe_allow_html=True,
+                    #     )
+                    # st.write(" ")
 
-                            # Display caption in second column with small text size and right alignment
-                            with col2:
-                                st.markdown(
-                                    f"<p style='font-size: small; text-align: left;'>{korean_matched_caption}</p>",
-                                    unsafe_allow_html=True,
-                                )
-                            st.write(" ")
-                
-                
-                
+                    #col1, mid, col2 = st.beta_columns([1,1,20])
+                    #with col1:
+                        #st.image(matched_image_path, width=300, channels="RGB", output_format = "auto")
+                    #with col2:
+                    
+                        #st.write(matched_caption)
+
+                elif language == "Korean/한국인":
+                    #st.image(matched_image_path, caption=None, width=300, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
+                    col1, col2 = st.columns(2)
+
+                    # Display image in first column with appropriate width and caption text size
+                    # with col1:
+                    #     st.image(
+                    #         matched_image_path,
+                    #         caption=None,
+                    #         width=300,
+                    #         use_column_width=None,  # Ensure image respects width in pixels
+                    #         clamp=False,
+                    #         channels="RGB",
+                    #         output_format="auto",
+                    #     )
+
+                    # Display caption in second column with small text size and right alignment
+                    # with col2:
+                    #     st.markdown(
+                    #         f"<p style='font-size: small; text-align: left;'>{korean_matched_caption}</p>",
+                    #         unsafe_allow_html=True,
+                    #     )
+                    # st.write(" ")
+            
+            
+            
 
 
 
@@ -448,25 +483,25 @@ def main():
                 
             
             if Exactly_matched == False:
-                for image_info in image_data:
-                    caption = image_info["imageCaption"]
-                    korean_caption = image_info["KoreanimageCaption"]
-                    image_path = image_info["imagePath"]
+                # for image_info in image_data:
+                #     caption = image_info["imageCaption"]
+                #     korean_caption = image_info["KoreanimageCaption"]
+                #     image_path = image_info["imagePath"]
                 
 
-                    prompt = [
-                            {"role": "system", "content": "You are a helpful assistant"},
-                            {"role": "user", "content": f"provide a short caption for the image that should match exactly with this question,  question: '{question}'?"},
-                            ]
-                    response = openai.ChatCompletion.create(
-                        model="gpt-3.5-turbo",
-                        messages=prompt,
-                        max_tokens=150,
-                        n=1,
-                        stop=None,
-                        temperature=0.5,
-                     )
-                    caption1 = response.choices[0].message.content.split("\n")[-1]
+                #     prompt = [
+                #             {"role": "system", "content": "You are a helpful assistant"},
+                #             {"role": "user", "content": f"provide a short caption for the image that should match exactly with this question,  question: '{question}'?"},
+                #             ]
+                #     response = openai.ChatCompletion.create(
+                #         model="gpt-3.5-turbo",
+                #         messages=prompt,
+                #         max_tokens=150,
+                #         n=1,
+                #         stop=None,
+                #         temperature=0.5,
+                #      )
+                #     caption1 = response.choices[0].message.content.split("\n")[-1]
                 
 
 
@@ -476,7 +511,7 @@ def main():
                 
                     prompt = [
                             {"role": "system", "content": "You are a helpful assistant"},
-                            {"role": "user", "content": f"Do these captions exactly matches with each other, if yes then just say yes otherwise no,Caption1 '{caption1}'?\n\nCaption2: {caption}"},
+                            # {"role": "user", "content": f"Do these captions exactly matches with each other, if yes then just say yes otherwise no,Caption1 '{caption1}'?\n\nCaption2: {caption}"},
                             ]
                 
 
@@ -498,9 +533,9 @@ def main():
                     # Check if OpenAI's response matches the caption
                     if response.choices[0].message.content.split("\n")[-1] == "Yes":
                         # Match found, save image path and caption
-                        matched_image_path = image_path
-                        matched_caption = caption
-                        korean_matched_caption = korean_caption
+                        # matched_image_path = image_path
+                        # matched_caption = caption
+                        # korean_matched_caption = korean_caption
                         #st.info("found matching image...")
                     
                         #st.image(matched_image_path, caption=None, width=300, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
@@ -511,24 +546,24 @@ def main():
                             col1, col2 = st.columns(2)
 
                             # Display image in first column with appropriate width and caption text size
-                            with col1:
-                                st.image(
-                                    matched_image_path,
-                                    caption=None,
-                                    width=300,
-                                    use_column_width=None,  # Ensure image respects width in pixels
-                                    clamp=False,
-                                    channels="RGB",
-                                    output_format="auto",
-                                )
+                            # with col1:
+                            #     st.image(
+                            #         matched_image_path,
+                            #         caption=None,
+                            #         width=300,
+                            #         use_column_width=None,  # Ensure image respects width in pixels
+                            #         clamp=False,
+                            #         channels="RGB",
+                            #         output_format="auto",
+                            #     )
 
-                            # Display caption in second column with small text size and right alignment
-                            with col2:
-                                st.markdown(
-                                    f"<p style='font-size: small; text-align: left;'>{matched_caption}</p>",
-                                    unsafe_allow_html=True,
-                                )
-                            st.write(" ")
+                            # # Display caption in second column with small text size and right alignment
+                            # with col2:
+                            #     st.markdown(
+                            #         f"<p style='font-size: small; text-align: left;'>{matched_caption}</p>",
+                            #         unsafe_allow_html=True,
+                            #     )
+                            # st.write(" ")
         
                             #col1, mid, col2 = st.beta_columns([1,1,20])
                             #with col1:
@@ -542,24 +577,24 @@ def main():
                             col1, col2 = st.columns(2)
 
                             # Display image in first column with appropriate width and caption text size
-                            with col1:
-                                st.image(
-                                    matched_image_path,
-                                    caption=None,
-                                    width=300,
-                                    use_column_width=None,  # Ensure image respects width in pixels
-                                    clamp=False,
-                                    channels="RGB",
-                                    output_format="auto",
-                                )
+                            # with col1:
+                            #     st.image(
+                            #         matched_image_path,
+                            #         caption=None,
+                            #         width=300,
+                            #         use_column_width=None,  # Ensure image respects width in pixels
+                            #         clamp=False,
+                            #         channels="RGB",
+                            #         output_format="auto",
+                            #     )
 
                             # Display caption in second column with small text size and right alignment
-                            with col2:
-                                st.markdown(
-                                    f"<p style='font-size: small; text-align: left;'>{korean_matched_caption}</p>",
-                                    unsafe_allow_html=True,
-                                )
-                            st.write(" ")
+                            # with col2:
+                            #     st.markdown(
+                            #         f"<p style='font-size: small; text-align: left;'>{korean_matched_caption}</p>",
+                            #         unsafe_allow_html=True,
+                            #     )
+                            # st.write(" ")
             
                     #st.info("No match found...")
                     # Iterate through the image data
